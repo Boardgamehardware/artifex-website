@@ -143,7 +143,7 @@ function SplashSection() {
         className="scroll-cue"
         type="button"
         aria-label="Scroll to key features"
-        onClick={() => document.getElementById('what-is-it')?.scrollIntoView({ behavior: 'smooth' })}
+        onClick={() => document.getElementById('what-is-it')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
       >
         <img src={downArrow} alt="" />
       </button>
