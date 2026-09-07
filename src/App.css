@@ -10,6 +10,7 @@
   --subtitle: clamp(20px, 1.61vw, 24px);
   --body: clamp(16px, 1.2vw, 18px);
   --section-gap: 150px;
+  --media-radius: 6px;
 }
 
 main {
@@ -51,7 +52,6 @@ h1,
 h2 {
   font-family: 'New Rocker', serif;
   font-weight: 400;
-  line-height: 0.98;
 }
 
 p {
@@ -325,7 +325,7 @@ p {
   width: 100%;
   aspect-ratio: 16 / 9;
   max-width: none;
-  border-radius: 6px;
+  border-radius: var(--media-radius);
   object-fit: cover;
 }
 
@@ -398,7 +398,7 @@ p {
   display: block;
   width: 100%;
   aspect-ratio: 16 / 9;
-  border-radius: 6px;
+  border-radius: var(--media-radius);
   object-fit: cover;
 }
 
@@ -448,66 +448,117 @@ p {
   gap: 42px;
 }
 
+.customize-feature-intro {
+  margin-top: 0;
+}
+
 .customize-feature-copy {
   max-width: 390px;
   color: #fff;
 }
 
-.customize-feature-list ul {
-  margin: 18px 0 0;
-  padding-left: 1.2em;
-  font-size: var(--body);
-  line-height: 1.3;
+.customize-intro-copy h2 {
+  color: var(--accent-primary);
+  font-size: var(--title);
+  line-height: 1.08;
 }
 
-.customize-feature-list li + li {
-  margin-top: 6px;
+.customize-intro-copy p {
+  margin-top: 42px;
 }
 
 .customize-feature-media {
   display: block;
   width: 100%;
   aspect-ratio: 1.46;
-  border-radius: 15px;
+  border-radius: var(--media-radius);
   object-fit: cover;
+}
+
+.customization-card-grid {
+  margin-top: clamp(48px, 5vw, 72px);
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.customization-card {
+  overflow: hidden;
+  min-width: 0;
+  border-radius: 14px;
+  background: #211d1d;
+}
+
+.customization-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 0.78;
+  object-fit: cover;
+}
+
+.customization-card p {
+  padding: 18px 16px 22px;
+  color: #fff;
+  font-size: clamp(14px, 1.05vw, 16px);
+  line-height: 1.3;
+  text-align: center;
 }
 
 .customize-stage {
   position: relative;
   width: min(100%, 1496px);
-  height: 600px;
+  height: 900px;
   margin: 60px auto 0;
+  border-radius: var(--media-radius);
+  background-color: var(--accent-primary);
+  background-image: radial-gradient(circle, rgba(255, 225, 170, 0.386) 1.5px, transparent 1.6px);
+  background-size: 23px 23px;
+}
+
+.customize-stage-title {
+  position: absolute;
+  z-index: 9;
+  top: 70px;
+  right: 20px;
+  left: 20px;
+  color: #000;
+  font-family: 'New Rocker', serif;
+  font-size: var(--title);
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+  pointer-events: none;
+}
+
+.customize-stage-instructions {
+  position: absolute;
+  z-index: 9;
+  top: 145px;
+  right: 20px;
+  left: 20px;
+  color: #000;
+  text-align: center;
+  pointer-events: none;
 }
 
 .customize-canvas {
   position: absolute;
-  inset: 0;
+  inset: 200px 0 100px;
   touch-action: none;
 }
 
 .model-labels {
   position: absolute;
-  bottom: 57px;
+  bottom: 157px;
   left: 50%;
   width: 1280px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
   transform: translateX(-50%);
-  color: var(--accent-secondary);
+  color: black;
   font-family: 'Girassol', serif;
   font-size: 21px;
-  text-align: center;
-}
-
-.prop-controls {
-  position: relative;
-  z-index: 5;
-  margin-top: 24px;
-}
-
-.prop-instructions {
-  margin-bottom: 0;
   text-align: center;
 }
 
@@ -550,7 +601,7 @@ p {
   position: relative;
   aspect-ratio: 1.46;
   overflow: hidden;
-  border-radius: 15px;
+  border-radius: var(--media-radius);
   background: var(--accent-primary);
 }
 
@@ -971,8 +1022,9 @@ p {
   .splash-layout { grid-template-columns: 48% 52%; }
   .splash-viewer { min-height: 480px; }
   .what-copy { width: 64%; }
-  .customize-stage { height: 510px; }
-  .model-labels { bottom: 72px; font-size: 17px; }
+  .customization-card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .customize-stage { height: 810px; }
+  .model-labels { bottom: 172px; font-size: 17px; }
   .review-card { width: 290px; height: 380px; }
   .specs-grid { gap: 28px 22px; }
   .specs-layout { grid-template-columns: 60% 40%; }
@@ -1111,14 +1163,28 @@ p {
     text-align: center;
   }
 
+  .customize-intro-copy p {
+    margin-top: 22px;
+  }
+
+  .customization-card-grid {
+    margin-top: 38px;
+    grid-template-columns: 1fr;
+  }
+
+  .customization-card {
+    width: min(100%, 420px);
+    margin-inline: auto;
+  }
+
   .customize-stage {
-    height: 490px;
+    height: 790px;
     margin-top: 38px;
   }
 
   .model-labels {
     right: 20px;
-    bottom: 26px;
+    bottom: 126px;
     left: 20px;
     width: auto;
     display: block;
@@ -1133,7 +1199,7 @@ p {
   .casing-arrows {
     position: absolute;
     z-index: 8;
-    inset: 0;
+    inset: 200px 0 100px;
     display: block;
     pointer-events: none;
   }

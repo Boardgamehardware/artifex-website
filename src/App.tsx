@@ -13,6 +13,7 @@ import animationBackgroundMp4 from './assets/images/Animation Demo Video.mp4'
 import animationFallback from './assets/images/Fallback Image - Animate your heros.webp'
 import customizeFeatureWebm from './assets/images/Magnetic Attachment Customizability Video.webm'
 import customizeFeatureMp4 from './assets/images/Magnetic Attachment Customizability Video.mp4'
+import customizeCardPlaceholder from './assets/images/App - Placeholder Image 4.png'
 import profilePicture from './assets/images/Placeholder Profile Picture.png'
 import specsDrawing from './assets/images/Specs - Decorative Side Drawing.webp'
 import ctaBackground from './assets/images/BG image - Footer.webp'
@@ -64,6 +65,19 @@ const specs = [
   { title: 'Display', text: <>4K Liquid Crystal full-color<br />screen, animation-supported</>, icon: displayIcon },
   { title: 'Size', text: <>50 x 30 x 15 mm</>, icon: sizeIcon },
   { title: 'Casing Options', text: <>Stone, Academy, Wanted, Palace</>, icon: casingIcon },
+]
+
+const customizationItems = [
+  'A variety of weapons',
+  'Animal familiars (that detach from the Artifact to move freely as their own miniatures)',
+  'Erasable nameplates',
+  'Indicators for game states like Concentration and Death saves',
+  'Easily-forgotten rewards like Heroic Inspiration',
+  'Accessories that light up when attached to the Mini (like our spider familiar and Heroic Inspiration accessories)',
+  'Cute animal ears',
+  'Condition markers',
+  "Class markers (a small badge indicating you're a rogue, fighter, etc)",
+  'Faction markers',
 ]
 
 function InertAction({ children, className = '' }: { children: React.ReactNode; className?: string }) {
@@ -186,7 +200,6 @@ function AnimationFeatureSection() {
   return (
     <section className="animation-feature-section" aria-labelledby="animation-feature-title">
       <div className="animation-feature-copy">
-        <p className="eyebrow">Key Feature</p>
         <h2 id="animation-feature-title">Animate Your Heros!</h2>
         <p>See your characters animated beautifully on twin high-resolution LCD screens, adding movement and atmosphere to your campaign.</p>
       </div>
@@ -249,40 +262,26 @@ function CustomizeSection() {
 
   return (
     <section className="customize-section" aria-labelledby="customize-title">
-      <div className="section-container customize-heading">
-        <p className="eyebrow">Customizability</p>
-        <h2 id="customize-title">Totally Customizable.</h2>
-        <p>Four handcrafted designs fitted with magnetic hotspots, the Arca 1 is designed to adapt to any character and situation.</p>
-      </div>
-
-      <div className="section-container customize-feature-layout">
-        <p className="customize-feature-copy">
-          The Artifact Mini uses magnetic connection points to snap physical accessories to its top, front, and sides.
-          <br /><br />
-          These pieces allow for customization beyond just the casing design, allowing your character to be truly represented in 3D space. And they were designed to be useful too, not just pretty.
-        </p>
+      <div className="section-container customize-feature-layout customize-feature-intro">
+        <div className="customize-feature-copy customize-intro-copy">
+          <h2 id="customize-title">Totally Customizable.</h2>
+          <p>The Artifact Mini uses magnetic connection points to snap our specially-designed modular accessories to its top, front, and sides, allowing your character to be truly represented in 3D space.</p>
+        </div>
         <CustomizeFeatureVideo label="Magnetic accessories attaching to an Artifact Mini" />
       </div>
-
-      <div className="section-container customize-feature-layout">
-        <div className="customize-feature-copy customize-feature-list">
-          <p>Here&apos;s everything we&apos;ve designed:</p>
-          <ul>
-            <li>A variety of weapons</li>
-            <li>Animal familiars (that detach from the Artifact to move freely as their own miniatures)</li>
-            <li>Erasable nameplates</li>
-            <li>Indicators for Concentration, Heroic Inspiration, and Death saves</li>
-            <li>Accessories that light up when attached to the Mini (like our spider familiar and Heroic Inspiration accessories)</li>
-            <li>Cute animal ears</li>
-            <li>Condition markers</li>
-            <li>Class markers (a small badge indicating you&apos;re a rogue, fighter, etc)</li>
-            <li>Faction markers</li>
-          </ul>
-        </div>
-        <CustomizeFeatureVideo label="A selection of accessories designed for the Artifact Mini" />
+      
+      <div className="section-container customization-card-grid">
+        {customizationItems.map((item) => (
+          <article className="customization-card" key={item}>
+            <img src={customizeCardPlaceholder} alt="" />
+            <p>{item}</p>
+          </article>
+        ))}
       </div>
 
       <div ref={stageRef} className="customize-stage">
+        <h3 className="customize-stage-title">Try it yourself!</h3>
+        {!mobile && <p className="customize-stage-instructions">Drag and drop props to rearrange.</p>}
         {shouldLoadCanvas ? (
           <ModelErrorBoundary>
             <Suspense fallback={<div className="model-loader">Loading customizer…</div>}>
@@ -322,11 +321,6 @@ function CustomizeSection() {
         </div>
       )}
 
-      {!mobile && (
-        <div className="prop-controls section-container">
-          <p className="prop-instructions">Drag and drop props to rearrange.</p>
-        </div>
-      )}
       {!mobile && <p className="sr-only" aria-live="polite">{announcement}</p>}
     </section>
   )
