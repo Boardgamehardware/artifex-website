@@ -4,28 +4,28 @@ import { hotspotOccupant, initialPlacements, placeProp } from './configurator'
 describe('configurator placement rules', () => {
   it('starts props on the approved hotspots', () => {
     expect(initialPlacements).toEqual({
-      burning: 'secret-academy-bottom',
-      charmed: 'noble-palace-bottom',
       dragon: 'secret-academy-top',
       gauntlet: 'noble-palace-top',
-      owl: 'ancient-stone-left',
+      owl: 'ancient-stone-right',
       potion: 'wanted-left',
       spider: 'wanted-top',
-      staff: 'ancient-stone-right',
+      staff: 'ancient-stone-left',
+      ears: 'ancient-stone-top',
+      rogue: 'wanted-bottom',
     })
   })
 
   it('moves a prop to an open hotspot', () => {
-    const next = placeProp(initialPlacements, 'burning', 'ancient-stone-bottom')
-    expect(next.burning).toBe('ancient-stone-bottom')
-    expect(hotspotOccupant(next, 'ancient-stone-bottom')).toBe('burning')
+    const next = placeProp(initialPlacements, 'dragon', 'ancient-stone-bottom')
+    expect(next.dragon).toBe('ancient-stone-bottom')
+    expect(hotspotOccupant(next, 'ancient-stone-bottom')).toBe('dragon')
   })
 
   it('exchanges props when a prop is dropped on an occupied hotspot', () => {
-    const next = placeProp(initialPlacements, 'burning', 'noble-palace-bottom')
-    expect(next.burning).toBe('noble-palace-bottom')
-    expect(next.charmed).toBe('secret-academy-bottom')
-    expect(hotspotOccupant(next, 'noble-palace-bottom')).toBe('burning')
-    expect(hotspotOccupant(next, 'secret-academy-bottom')).toBe('charmed')
+    const next = placeProp(initialPlacements, 'rogue', 'wanted-top')
+    expect(next.rogue).toBe('wanted-top')
+    expect(next.spider).toBe('wanted-bottom')
+    expect(hotspotOccupant(next, 'wanted-top')).toBe('rogue')
+    expect(hotspotOccupant(next, 'wanted-bottom')).toBe('spider')
   })
 })

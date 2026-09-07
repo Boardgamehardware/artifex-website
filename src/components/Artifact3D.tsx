@@ -20,7 +20,7 @@ function LoadingModel() {
   return <div className="model-loader" role="status">Loading model {Math.round(progress)}%</div>
 }
 
-export function ModelEnvironment() {
+function ModelEnvironment() {
   const lightRig = useRef<THREE.Group>(null)
   const keyLight = useRef<THREE.RectAreaLight>(null)
   const rimLight = useRef<THREE.RectAreaLight>(null)

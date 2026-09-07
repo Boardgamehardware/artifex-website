@@ -2,14 +2,14 @@ export type ModelId = 'ancient-stone' | 'secret-academy' | 'wanted' | 'noble-pal
 export type HotspotSide = 'top' | 'bottom' | 'left' | 'right'
 export type HotspotId = `${ModelId}-${HotspotSide}`
 export type PropId =
-  | 'burning'
-  | 'charmed'
   | 'dragon'
   | 'gauntlet'
   | 'owl'
   | 'potion'
   | 'spider'
   | 'staff'
+  | 'ears'
+  | 'rogue'
 
 export interface ModelConfig {
   id: ModelId
@@ -34,7 +34,9 @@ export interface Hotspot {
 export type PropPlacement = Record<PropId, HotspotId | null>
 
 export interface Slide {
+  kind: 'image' | 'video'
   src: string
+  fallbackSrc?: string
   alt: string
 }
 

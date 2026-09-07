@@ -3,16 +3,19 @@ import './App.css'
 import { hotspotOccupant, initialPlacements, placeProp } from './configurator'
 import { faqs, models, props, reviews, slides } from './content'
 import { useDocumentVisible, useHasApproachedViewport, useMediaQuery, useVisualTestMode } from './hooks'
-import type { HotspotId, PropId } from './types'
+import type { HotspotId, PropId, Slide } from './types'
 
-import logo from './assets/logo.svg'
-import whatBackground from './assets/images/BG image - A miniature thats just better.webp'
-import animationBackgroundWebm from './assets/images/BG video - Animate your heros.webm'
-import animationBackgroundMp4 from './assets/images/Fallback - BG video - Animate your heros.mp4'
+import logo from './assets/images/LOGO - vertical.svg'
+import tabletopImage1 from './assets/images/Tabletop Img 1.webp'
+import tabletopImage2 from './assets/images/Tabletop Img 2.webp'
+import animationBackgroundWebm from './assets/images/Animation Demo Video.webm'
+import animationBackgroundMp4 from './assets/images/Animation Demo Video.mp4'
 import animationFallback from './assets/images/Fallback Image - Animate your heros.webp'
+import customizeFeatureWebm from './assets/images/Magnetic Attachment Customizability Video.webm'
+import customizeFeatureMp4 from './assets/images/Magnetic Attachment Customizability Video.mp4'
 import profilePicture from './assets/images/Placeholder Profile Picture.png'
-import specsDrawing from './assets/images/Specs - Decorative Side Drawing.png'
-import ctaBackground from './assets/images/BG image - Footer.jpg'
+import specsDrawing from './assets/images/Specs - Decorative Side Drawing.webp'
+import ctaBackground from './assets/images/BG image - Footer.webp'
 import nextImageIcon from './assets/Icons/Next Image Button.png'
 import previousImageIcon from './assets/Icons/Next Image Button (Left).png'
 import downArrow from './assets/Icons/Downward arrow.png'
@@ -124,7 +127,7 @@ function SplashSection() {
           <p className="eyebrow">Where Tabletop Meets Technology</p>
           <h1 id="splash-title">Artifact Mini</h1>
           <p>
-            A bridge between imagination and the table. The Interactive Hub for Tabletop RPGs makes gaming more immersive and effortless, allowing stories to be seen, heard, and remembered beautifully.
+            Display your TTRPG character in motion on the Artifact's double-sided screens; with magnetic physical accessories and a design made for tabletop play.
           </p>
           <InertAction className="primary-button">Preorder Now!</InertAction>
         </div>
@@ -158,36 +161,65 @@ function FeaturesSection() {
       <div className="what-copy">
         <p className="eyebrow">Key Features</p>
         <h2 id="what-title">A Miniature That’s Just Better.</h2>
-        <p>An electronic miniature that elevates face-to-face tabletop play, extending imagination through responsive visuals and sound.</p>
       </div>
       <div className="feature-media-grid">
         <div className="feature-column">
-          <img className="feature-media" src={whatBackground} alt="Two Artifact Mini devices on a fantasy game board" />
+          <img className="feature-media" src={tabletopImage1} alt="Two Artifact Mini devices on a fantasy game board" />
           <div className="feature-caption">
-            <h3 className="eyebrow">Beautiful display</h3>
-            <p>See your characters animated beautifully on twin high-resolution LCD screens, adding movement and atmosphere to your campaign.</p>
+            <h3 className="eyebrow">Built For The Tabletop</h3>
+            <p>The foot of the Artifact Mini fits a standard 1-inch battlemap grid and its double-sided design keeps your character visible around the table.</p>
           </div>
         </div>
         <div className="feature-column">
-          <video
-            className="background-video feature-media"
-            poster={animationFallback}
-            autoPlay
-            muted
-            loop
-            playsInline
-            aria-hidden="true"
-          >
-            <source src={animationBackgroundWebm} type="video/webm" />
-            <source src={animationBackgroundMp4} type="video/mp4" />
-          </video>
+          <img className="feature-media" src={tabletopImage2} alt="Artifact Mini devices arranged on a tabletop" />
           <div className="animation-copy feature-caption">
-            <h3 id="animation-title" className="eyebrow">Animate Your Heroes!</h3>
-            <p>See your characters animated beautifully on twin high-resolution LCD screens, adding movement and atmosphere to your campaign.</p>
+            <h3 id="animation-title" className="eyebrow">Four Fantastical Designs</h3>
+            <p>With four outer designs inspired by different character backgrounds and map settings, the Artifact is designed to meld seamlessly into the tabletop. </p>
           </div>
         </div>
       </div>
     </section>
+  )
+}
+
+function AnimationFeatureSection() {
+  return (
+    <section className="animation-feature-section" aria-labelledby="animation-feature-title">
+      <div className="animation-feature-copy">
+        <p className="eyebrow">Key Feature</p>
+        <h2 id="animation-feature-title">Animate Your Heros!</h2>
+        <p>See your characters animated beautifully on twin high-resolution LCD screens, adding movement and atmosphere to your campaign.</p>
+      </div>
+      <video
+        className="background-video animation-feature-video"
+        poster={animationFallback}
+        autoPlay
+        muted
+        loop
+        playsInline
+        aria-hidden="true"
+      >
+        <source src={animationBackgroundWebm} type="video/webm" />
+        <source src={animationBackgroundMp4} type="video/mp4" />
+      </video>
+    </section>
+  )
+}
+
+function CustomizeFeatureVideo({ label }: { label: string }) {
+  return (
+    <video
+      className="background-video customize-feature-media"
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      aria-label={label}
+    >
+      <source src={customizeFeatureWebm} type="video/webm" />
+      <source src={customizeFeatureMp4} type="video/mp4" />
+    </video>
   )
 }
 
@@ -218,8 +250,36 @@ function CustomizeSection() {
   return (
     <section className="customize-section" aria-labelledby="customize-title">
       <div className="section-container customize-heading">
+        <p className="eyebrow">Customizability</p>
         <h2 id="customize-title">Totally Customizable.</h2>
         <p>Four handcrafted designs fitted with magnetic hotspots, the Arca 1 is designed to adapt to any character and situation.</p>
+      </div>
+
+      <div className="section-container customize-feature-layout">
+        <p className="customize-feature-copy">
+          The Artifact Mini uses magnetic connection points to snap physical accessories to its top, front, and sides.
+          <br /><br />
+          These pieces allow for customization beyond just the casing design, allowing your character to be truly represented in 3D space. And they were designed to be useful too, not just pretty.
+        </p>
+        <CustomizeFeatureVideo label="Magnetic accessories attaching to an Artifact Mini" />
+      </div>
+
+      <div className="section-container customize-feature-layout">
+        <div className="customize-feature-copy customize-feature-list">
+          <p>Here&apos;s everything we&apos;ve designed:</p>
+          <ul>
+            <li>A variety of weapons</li>
+            <li>Animal familiars (that detach from the Artifact to move freely as their own miniatures)</li>
+            <li>Erasable nameplates</li>
+            <li>Indicators for Concentration, Heroic Inspiration, and Death saves</li>
+            <li>Accessories that light up when attached to the Mini (like our spider familiar and Heroic Inspiration accessories)</li>
+            <li>Cute animal ears</li>
+            <li>Condition markers</li>
+            <li>Class markers (a small badge indicating you&apos;re a rogue, fighter, etc)</li>
+            <li>Faction markers</li>
+          </ul>
+        </div>
+        <CustomizeFeatureVideo label="A selection of accessories designed for the Artifact Mini" />
       </div>
 
       <div ref={stageRef} className="customize-stage">
@@ -272,6 +332,50 @@ function CustomizeSection() {
   )
 }
 
+function SlideshowMedia({ slide, active, shouldPlay }: { slide: Slide; active: boolean; shouldPlay: boolean }) {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+    if (!shouldPlay) {
+      video.pause()
+      return
+    }
+
+    const playAttempt = video.play()
+    playAttempt?.catch(() => undefined)
+  }, [shouldPlay])
+
+  if (slide.kind === 'image') {
+    return (
+      <img
+        className={`slide-media ${active ? 'is-active' : ''}`}
+        src={slide.src}
+        alt={active ? slide.alt : ''}
+        loading="eager"
+        decoding="async"
+      />
+    )
+  }
+
+  return (
+    <video
+      ref={videoRef}
+      className={`slide-media ${active ? 'is-active' : ''}`}
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      aria-label={active ? slide.alt : undefined}
+      aria-hidden={!active}
+    >
+      <source src={slide.src} type="video/webm" />
+      {slide.fallbackSrc && <source src={slide.fallbackSrc} type="video/mp4" />}
+    </video>
+  )
+}
+
 function AppSlideshow() {
   const [active, setActive] = useState(0)
   const [paused, setPaused] = useState(false)
@@ -297,13 +401,11 @@ function AppSlideshow() {
     >
       <div className="slide-frame" aria-live="polite">
         {slides.map((slide, index) => (
-          <img
+          <SlideshowMedia
             key={slide.src}
-            className={`slide-image ${index === active ? 'is-active' : ''}`}
-            src={slide.src}
-            alt={index === active ? slide.alt : ''}
-            loading="eager"
-            decoding="async"
+            slide={slide}
+            active={index === active}
+            shouldPlay={index === active && visible && !reducedMotion && !visualTest}
           />
         ))}
         <button type="button" className="next-slide" onClick={() => setActive((current) => (current + 1) % slides.length)} aria-label="Next image">
@@ -460,6 +562,7 @@ function App() {
       <main>
         <SplashSection />
         <FeaturesSection />
+        <AnimationFeatureSection />
         <div className="customize-app-background">
           <CustomizeSection />
           <AppSection />

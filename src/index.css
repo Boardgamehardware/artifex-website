@@ -7,7 +7,7 @@
 :root {
   font-family: 'Lato', sans-serif;
   color: #fff7f0;
-  background: #33302f;
+  background: #262323;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 }
@@ -15,7 +15,7 @@
 html {
   min-width: 320px;
   scroll-behavior: smooth;
-  background: #33302f;
+  background: #262323;
 }
 
 body {

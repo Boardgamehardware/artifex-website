@@ -1,12 +1,23 @@
 import { Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree, type ThreeEvent } from '@react-three/fiber'
-import { useGLTF, useTexture } from '@react-three/drei'
+import { Environment, useGLTF, useTexture } from '@react-three/drei'
 import { decompressFrames, parseGIF, type ParsedFrame } from 'gifuct-js'
 import * as THREE from 'three'
-import { models, props } from '../content'
-import { ModelEnvironment } from './Artifact3D'
+import { models, props, publicAssetUrl } from '../content'
 import loadingAnimation from '../assets/images/loading animation.gif'
 import type { Hotspot, HotspotId, HotspotSide, ModelId, PropId, PropPlacement } from '../types'
+
+const customizerEnvironmentUrl = publicAssetUrl('pink-sunrise-compressed.exr')
+
+function CustomizerEnvironment() {
+  return (
+    <Environment
+      files={customizerEnvironmentUrl}
+      background={false}
+      environmentIntensity={1.8}
+    />
+  )
+}
 
 const modelX: Record<ModelId, number> = {
   'ancient-stone': -3.5,
@@ -360,7 +371,7 @@ function CustomizeScene({ placements, activeModel, interactive, onPlace }: Custo
 
   return (
     <>
-      <ModelEnvironment />
+      <CustomizerEnvironment />
       {models.map((model) => {
         if (activeModel && model.id !== activeModel) return null
         const x = activeModel ? 0 : modelX[model.id]

@@ -19,11 +19,11 @@ test('starts the splash projection without user interaction', async ({ page }, t
   ).toBe(true)
 })
 
-test('renders all supplied app slides and exposes the active image', async ({ page }, testInfo) => {
+test('renders all supplied app slides and exposes the active media', async ({ page }, testInfo) => {
   await page.goto('/')
-  const slides = page.locator('.slide-frame > .slide-image')
+  const slides = page.locator('.slide-frame > .slide-media')
   await expect(slides).toHaveCount(4)
-  await expect(slides.nth(0)).toHaveAttribute('src', /App - Placeholder Image 1|App%20-%20Placeholder%20Image%201/)
+  await expect(slides.nth(0).locator('source[type="video/webm"]')).toHaveAttribute('src', /How It Works Video 1|How%20It%20Works%20Video%201/)
   await expect(slides.nth(0)).toHaveCSS('opacity', '1')
   const nextButton = page.getByRole('button', { name: 'Next image' })
   await expect(nextButton).toHaveCSS('opacity', '0.6')

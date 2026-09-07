@@ -1,5 +1,7 @@
-import appSlide1 from './assets/images/How it works - 1.webp'
-import appSlide2 from './assets/images/How it works - 2.gif'
+import appSlide1Webm from './assets/images/How It Works Video 1.webm'
+import appSlide1Mp4 from './assets/images/How It Works Video 1.mp4'
+import appSlide2Webm from './assets/images/How It Works Video 3.webm'
+import appSlide2Mp4 from './assets/images/How It Works Video 3.mp4'
 import appSlide3 from './assets/images/How it works - 3.gif'
 import appSlide4 from './assets/images/App - Placeholder Image 4.png'
 import customizeDeviceAcademy from './assets/images/Customize Device - Academy.png'
@@ -21,18 +23,6 @@ export const models: ModelConfig[] = [
 
 export const props: PropConfig[] = [
   {
-    id: 'burning',
-    label: 'Burning',
-    modelUrl: publicAssetUrl('Prop - Burning.glb'),
-    initialHotspot: 'secret-academy-bottom',
-  },
-  {
-    id: 'charmed',
-    label: 'Charmed',
-    modelUrl: publicAssetUrl('Prop - Charmed.glb'),
-    initialHotspot: 'noble-palace-bottom',
-  },
-  {
     id: 'dragon',
     label: 'Dragon',
     modelUrl: publicAssetUrl('Prop - Dragon.glb'),
@@ -48,7 +38,7 @@ export const props: PropConfig[] = [
     id: 'owl',
     label: 'Owl',
     modelUrl: publicAssetUrl('Prop - Owl.glb'),
-    initialHotspot: 'ancient-stone-left',
+    initialHotspot: 'ancient-stone-right',
   },
   {
     id: 'potion',
@@ -66,15 +56,27 @@ export const props: PropConfig[] = [
     id: 'staff',
     label: 'Staff',
     modelUrl: publicAssetUrl('Prop - Staff.glb'),
-    initialHotspot: 'ancient-stone-right',
+    initialHotspot: 'ancient-stone-left',
+  },
+  {
+    id: 'ears',
+    label: 'Ears',
+    modelUrl: publicAssetUrl('Prop - Ears.glb'),
+    initialHotspot: 'ancient-stone-top',
+  },
+  {
+    id: 'rogue',
+    label: 'Rogue',
+    modelUrl: publicAssetUrl('Prop - Rogue.glb'),
+    initialHotspot: 'wanted-bottom',
   },
 ]
 
 export const slides: Slide[] = [
-  { src: appSlide1, alt: 'How the Artifex app works, step one' },
-  { src: appSlide2, alt: 'How the Artifex app works, step two' },
-  { src: appSlide3, alt: 'How the Artifex app works, step three' },
-  { src: appSlide4, alt: 'Arca Studio app preview, pink placeholder' },
+  { kind: 'video', src: appSlide1Webm, fallbackSrc: appSlide1Mp4, alt: 'How the Artifex app works, step one' },
+  { kind: 'video', src: appSlide2Webm, fallbackSrc: appSlide2Mp4, alt: 'How the Artifex app works, step two' },
+  { kind: 'image', src: appSlide3, alt: 'How the Artifex app works, step three' },
+  { kind: 'image', src: appSlide4, alt: 'Arca Studio app preview, pink placeholder' },
 ]
 
 export const reviews: Review[] = Array.from({ length: 6 }, () => ({
