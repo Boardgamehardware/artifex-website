@@ -146,7 +146,7 @@ function SplashSection() {
       <div className="section-container splash-layout">
         <div className="splash-copy">
           <p className="eyebrow">Where Tabletop Meets Technology</p>
-          <h1 id="splash-title">Artifact Mini</h1>
+          <h1 id="splash-title">TESTArtifact Mini</h1>
           <p>
             Display your TTRPG character in motion on the Artifact's double-sided screens; with magnetic physical accessories and a design made for tabletop play.
           </p>
