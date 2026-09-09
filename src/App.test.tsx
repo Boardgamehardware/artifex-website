@@ -42,4 +42,15 @@ describe('landing page interactions', () => {
     const preorders = screen.getAllByText('Preorder Now!')
     expect(preorders.every((item) => item.getAttribute('aria-disabled') === 'true')).toBe(true)
   })
+
+  it('toggles an independent simulated like count on customization cards', async () => {
+    await act(async () => render(<App />))
+    const like = screen.getByRole('button', { name: 'Like Weapons' })
+
+    expect(like).toHaveAttribute('aria-pressed', 'false')
+    expect(like).toHaveTextContent('0')
+    fireEvent.click(like)
+    expect(screen.getByRole('button', { name: 'Unlike Weapons' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('button', { name: 'Unlike Weapons' })).toHaveTextContent('1')
+  })
 })
