@@ -67,17 +67,38 @@ const specs = [
 ]
 
 const customizationItems = [
-  'A variety of weapons',
-  'Animal familiars (that detach from the Artifact to move freely as their own miniatures)',
+  'Weapons',
+  'Animal familiars',
   'Erasable nameplates',
-  'Indicators for game states like Concentration and Death saves',
-  'Easily-forgotten rewards like Heroic Inspiration',
-  'Accessories that light up when attached to the Mini (like our spider familiar and Heroic Inspiration accessories)',
-  'Cute animal ears',
+  'Concentration and Death Saves',
+  'Heroic Inspiration',
+  'Light-up accessories',
+  'Animal ears',
   'Condition markers',
-  "Class markers (a small badge indicating you're a rogue, fighter, etc)",
+  "Class markers",
   'Faction markers',
 ]
+
+function CustomizationCard({ item, liked, onToggleLike }: { item: string; liked: boolean; onToggleLike: () => void }) {
+  return (
+    <article className="customization-card">
+      <img src={customizeCardPlaceholder} alt="" />
+      <div className="customization-card-footer">
+        <p>{item}</p>
+        <button
+          className="customization-like"
+          type="button"
+          aria-label={`${liked ? 'Unlike' : 'Like'} ${item}`}
+          aria-pressed={liked}
+          onClick={onToggleLike}
+        >
+          <span className="customization-like-heart" aria-hidden="true">♥</span>
+          <span className="customization-like-count" aria-live="polite">{liked ? 1 : 0}</span>
+        </button>
+      </div>
+    </article>
+  )
+}
 
 function InertAction({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
@@ -245,7 +266,17 @@ function CustomizeSection() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [placements, setPlacements] = useState(initialPlacements)
   const [announcement, setAnnouncement] = useState('')
+  const [likedItems, setLikedItems] = useState<Set<string>>(() => new Set())
   const activeModel = models[activeIndex]
+
+  const toggleLike = (item: string) => {
+    setLikedItems((current) => {
+      const next = new Set(current)
+      if (next.has(item)) next.delete(item)
+      else next.add(item)
+      return next
+    })
+  }
 
   const handlePlace = (propId: PropId, hotspotId: HotspotId) => {
     const occupant = hotspotOccupant(placements, hotspotId)
@@ -272,14 +303,29 @@ function CustomizeSection() {
         <CustomizeFeatureVideo label="Magnetic accessories attaching to an Artifact Mini" />
       </div>
       
-      <div className="section-container customization-card-grid">
-        {customizationItems.map((item) => (
-          <article className="customization-card" key={item}>
-            <img src={customizeCardPlaceholder} alt="" />
-            <p>{item}</p>
-          </article>
-        ))}
-      </div>
+      {mobile ? (
+        <div className="customization-card-rows">
+          {[customizationItems.slice(0, 5), customizationItems.slice(5)].map((row, rowIndex) => (
+            <div
+              className="section-container customization-card-row"
+              role="region"
+              aria-label={`Customization options row ${rowIndex + 1}`}
+              tabIndex={0}
+              key={rowIndex}
+            >
+              {row.map((item) => (
+                <CustomizationCard item={item} liked={likedItems.has(item)} onToggleLike={() => toggleLike(item)} key={item} />
+              ))}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="section-container customization-card-grid">
+          {customizationItems.map((item) => (
+            <CustomizationCard item={item} liked={likedItems.has(item)} onToggleLike={() => toggleLike(item)} key={item} />
+          ))}
+        </div>
+      )}
 
       <div ref={stageRef} className="customize-stage">
         <h3 className="customize-stage-title">Try it yourself!</h3>
