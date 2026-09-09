@@ -8,7 +8,7 @@ import customizeDeviceAcademy from './assets/images/Customize Device - Academy.p
 import customizeDevicePalace from './assets/images/Customize Device - Palace.png'
 import customizeDeviceStone from './assets/images/Customize Device - Stone.png'
 import customizeDeviceWanted from './assets/images/Customize Device - Wanted.png'
-import type { FaqItem, ModelConfig, PropConfig, Review, Slide } from './types'
+import type { FaqItem, ModelConfig, PropConfig, Slide } from './types'
 
 export const publicAssetUrl = (filename: string) => `${import.meta.env.BASE_URL}${filename}`
 
@@ -78,12 +78,6 @@ export const slides: Slide[] = [
   { kind: 'image', src: appSlide3, alt: 'How the Artifex app works, step three' },
   { kind: 'image', src: appSlide4, alt: 'Arca Studio app preview, pink placeholder' },
 ]
-
-export const reviews: Review[] = Array.from({ length: 6 }, () => ({
-  name: 'Name',
-  role: 'Info',
-  quote: '“Wow, so good!”',
-}))
 
 export const faqs: FaqItem[] = [
   {

@@ -40,12 +40,6 @@ export interface Slide {
   alt: string
 }
 
-export interface Review {
-  name: string
-  role: string
-  quote: string
-}
-
 export interface FaqItem {
   id: string
   question: string

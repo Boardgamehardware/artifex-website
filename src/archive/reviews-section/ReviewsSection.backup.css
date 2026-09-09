@@ -1,0 +1,97 @@
+.reviews-section {
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+  background: var(--bg-primary);
+}
+
+.reviews-heading {
+  text-align: center;
+}
+
+.reviews-heading h2 {
+  margin-top: 24px;
+  color: var(--accent-primary);
+  font-size: var(--title);
+  line-height: 1.12;
+}
+
+.reviews-viewport {
+  margin-top: 60px;
+  padding-top: 72px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.review-track {
+  width: max-content;
+  display: flex;
+  gap: 28px;
+  animation: review-scroll 34s linear infinite;
+}
+
+.review-track.is-paused {
+  animation-play-state: paused;
+}
+
+@keyframes review-scroll {
+  to { transform: translateX(calc(-50% - 14px)); }
+}
+
+.review-card {
+  position: relative;
+  width: 330px;
+  height: 418px;
+  padding: 76px 30px 30px;
+  border: 6px solid #171414;
+  border-radius: 13px;
+  background: #242020;
+  text-align: center;
+}
+
+.review-card > img {
+  position: absolute;
+  top: -72px;
+  left: 50%;
+  width: 124px;
+  transform: translateX(-50%);
+}
+
+.review-card h3 {
+  color: var(--accent-primary);
+  font-family: 'New Rocker', serif;
+  font-size: 29px;
+}
+
+.review-role {
+  margin-top: 4px;
+  color: var(--accent-secondary);
+  font-family: 'Girassol', serif;
+}
+
+.review-card blockquote {
+  margin-top: 50px;
+  font-size: 17px;
+}
+
+@media (max-width: 1023px) {
+  .review-card {
+    width: 290px;
+    height: 380px;
+  }
+}
+
+@media (max-width: 767px) {
+  .reviews-heading {
+    padding-inline: var(--gutter);
+  }
+
+  .reviews-viewport {
+    margin-top: 50px;
+  }
+
+  .review-card {
+    width: 280px;
+    height: 380px;
+  }
+}

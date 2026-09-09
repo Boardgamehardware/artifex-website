@@ -1,7 +1,7 @@
-import { Component, lazy, Suspense, useEffect, useMemo, useRef, useState, type ErrorInfo, type ReactNode } from 'react'
+import { Component, lazy, Suspense, useEffect, useRef, useState, type ErrorInfo, type ReactNode } from 'react'
 import './App.css'
 import { hotspotOccupant, initialPlacements, placeProp } from './configurator'
-import { faqs, models, props, reviews, slides } from './content'
+import { faqs, models, props, slides } from './content'
 import { useDocumentVisible, useHasApproachedViewport, useMediaQuery, useVisualTestMode } from './hooks'
 import type { HotspotId, PropId, Slide } from './types'
 
@@ -13,8 +13,7 @@ import animationBackgroundMp4 from './assets/images/Animation Demo Video.mp4'
 import animationFallback from './assets/images/Fallback Image - Animate your heros.webp'
 import customizeFeatureWebm from './assets/images/Magnetic Attachment Customizability Video.webm'
 import customizeFeatureMp4 from './assets/images/Magnetic Attachment Customizability Video.mp4'
-import customizeCardPlaceholder from './assets/images/App - Placeholder Image 4.png'
-import profilePicture from './assets/images/Placeholder Profile Picture.png'
+import customizeCardPlaceholder from './assets/images/Dragon.png'
 import specsDrawing from './assets/images/Specs - Decorative Side Drawing.webp'
 import ctaBackground from './assets/images/BG image - Footer.webp'
 import nextImageIcon from './assets/Icons/Next Image Button.png'
@@ -432,33 +431,6 @@ function AppSection() {
   )
 }
 
-function ReviewsSection() {
-  const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
-  const visible = useDocumentVisible()
-  const visualTest = useVisualTestMode()
-  const cards = useMemo(() => [...reviews, ...reviews], [])
-  return (
-    <section className="reviews-section" aria-labelledby="reviews-title">
-      <div className="reviews-heading">
-        <p className="eyebrow">Reviews</p>
-        <h2 id="reviews-title">But that’s just us.<br />What do Players have to say?</h2>
-      </div>
-      <div className="reviews-viewport" aria-label="Player reviews">
-        <div className={`review-track ${reducedMotion || !visible || visualTest ? 'is-paused' : ''}`}>
-          {cards.map((review, index) => (
-            <article className="review-card" key={`${review.name}-${index}`} aria-hidden={index >= reviews.length}>
-              <img src={profilePicture} alt="" />
-              <h3>{review.name}</h3>
-              <p className="review-role">{review.role}</p>
-              <blockquote>{review.quote}</blockquote>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
 function SpecsSection() {
   return (
     <section className="specs-section" aria-labelledby="specs-title">
@@ -564,7 +536,6 @@ function App() {
           <CustomizeSection />
           <AppSection />
         </div>
-        <ReviewsSection />
         <SpecsSection />
         <FaqSection />
         <CtaSection />

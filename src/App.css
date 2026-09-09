@@ -680,82 +680,6 @@ p {
   background: var(--accent-primary);
 }
 
-.reviews-section {
-  min-height: min(calc(100vw * 0.588), 880px);
-  padding: 44px 0 40px;
-  overflow: hidden;
-  background: var(--bg-primary);
-}
-
-.reviews-heading {
-  text-align: center;
-}
-
-.reviews-heading h2 {
-  margin-top: 24px;
-  color: var(--accent-primary);
-  font-size: var(--title);
-  line-height: 1.12;
-}
-
-.reviews-viewport {
-  margin-top: 60px;
-  padding-top: 72px;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.review-track {
-  width: max-content;
-  display: flex;
-  gap: 28px;
-  animation: review-scroll 34s linear infinite;
-}
-
-.review-track.is-paused {
-  animation-play-state: paused;
-}
-
-@keyframes review-scroll {
-  to { transform: translateX(calc(-50% - 14px)); }
-}
-
-.review-card {
-  position: relative;
-  width: 330px;
-  height: 418px;
-  padding: 76px 30px 30px;
-  border: 6px solid #171414;
-  border-radius: 13px;
-  background: #242020;
-  text-align: center;
-}
-
-.review-card > img {
-  position: absolute;
-  top: -72px;
-  left: 50%;
-  width: 124px;
-  transform: translateX(-50%);
-}
-
-.review-card h3 {
-  color: var(--accent-primary);
-  font-family: 'New Rocker', serif;
-  font-size: 29px;
-}
-
-.review-role {
-  margin-top: 4px;
-  color: var(--accent-secondary);
-  font-family: 'Girassol', serif;
-}
-
-.review-card blockquote {
-  margin-top: 50px;
-  font-size: 17px;
-}
-
 .specs-section {
   min-height: min(calc(100vw * 0.615), 920px);
   overflow: hidden;
@@ -1037,7 +961,6 @@ p {
   .customization-card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .customize-stage { height: 810px; }
   .model-labels { bottom: 172px; font-size: 17px; }
-  .review-card { width: 290px; height: 380px; }
   .specs-grid { gap: 28px 22px; }
   .specs-layout { grid-template-columns: 60% 40%; }
 }
@@ -1264,11 +1187,6 @@ p {
   .slide-frame { aspect-ratio: 1.28; }
   .next-slide { right: 16px; }
 
-  .reviews-section { min-height: 690px; padding: 36px 0 40px; }
-  .reviews-heading { padding-inline: var(--gutter); }
-  .reviews-viewport { margin-top: 50px; }
-  .review-card { width: 280px; height: 380px; }
-
   .specs-section { min-height: auto; padding: 50px 0 0; }
   .specs-layout { grid-template-columns: 1fr; }
   .specs-copy { text-align: center; }
@@ -1332,7 +1250,6 @@ p {
 
 .customize-section,
 .app-section,
-.reviews-section,
 .specs-section {
   min-height: 0;
   padding-top: 0;
