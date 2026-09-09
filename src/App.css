@@ -334,6 +334,14 @@ p {
   user-select: none;
 }
 
+.feature-media,
+.animation-feature-video,
+.customize-feature-media,
+.customization-card img,
+.slide-frame {
+  box-shadow: 3px 8px 8px rgba(0, 0, 0, 0.314);
+}
+
 .what-copy,
 .feature-caption {
   position: relative;
@@ -359,9 +367,13 @@ p {
   margin-inline: auto;
 }
 
-.feature-caption .eyebrow {
+.feature-subtitle {
   margin-bottom: 12px;
+  color: #fff;
+  font-family: 'Girassol', serif;
+  font-size: clamp(28px, 2.55vw, 38px);
   font-weight: 400;
+  line-height: 1.08;
 }
 
 .animation-feature-section {
@@ -1032,7 +1044,7 @@ p {
 
 @media (max-width: 767px) {
   :root {
-    --gutter: 20px;
+    --gutter: 30px;
     --title: clamp(38px, 12vw, 52px);
     --subtitle: 20px;
     --body: 16px;
@@ -1071,7 +1083,7 @@ p {
     left: 0;
     display: none;
     align-items: stretch;
-    padding: 22px 20px;
+    padding: 22px var(--gutter);
     flex-direction: column;
     gap: 8px;
     background: rgba(30, 27, 27, 0.94);
@@ -1105,14 +1117,14 @@ p {
   }
 
   .splash-copy h1 { margin: 16px 0; }
-  .splash-copy > p:not(.eyebrow) { margin-bottom: 28px; }
+  .splash-copy > p:not(.eyebrow) { margin-bottom: 20px; }
   .primary-button { width: 100%; min-height: 58px; font-size: 25px; }
 
   .splash-viewer {
-    width: calc(100% + 40px);
-    height: 480px;
+    width: 100%;
+    height: min(105vw, 410px);
     min-height: 0;
-    margin: 16px -20px -34px;
+    margin: 4px auto 20px;
   }
 
   .scroll-cue { display: none; }
@@ -1120,7 +1132,7 @@ p {
   .feature-section {
     height: auto;
     min-height: 0;
-    padding: 54px 20px 40px;
+    padding: 54px var(--gutter) 40px;
     gap: 26px;
   }
 
@@ -1141,7 +1153,7 @@ p {
 
   .animation-feature-section {
     gap: 26px;
-    padding: 54px 20px 40px;
+    padding: 54px var(--gutter) 40px;
   }
 
   .customize-section { min-height: auto; padding: 62px 0 24px; }
@@ -1169,15 +1181,22 @@ p {
 
   .customization-card-grid {
     margin-top: 38px;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
   }
 
   .customization-card {
-    width: min(100%, 420px);
-    margin-inline: auto;
+    width: 100%;
+    margin-inline: 0;
+  }
+
+  .customization-card p {
+    padding: 12px 7px 14px;
+    font-size: clamp(10px, 2.9vw, 12px);
   }
 
   .customize-stage {
+    width: calc(100% - (var(--gutter) * 2));
     height: 790px;
     margin-top: 38px;
   }
@@ -1246,7 +1265,7 @@ p {
   .next-slide { right: 16px; }
 
   .reviews-section { min-height: 690px; padding: 36px 0 40px; }
-  .reviews-heading { padding-inline: 20px; }
+  .reviews-heading { padding-inline: var(--gutter); }
   .reviews-viewport { margin-top: 50px; }
   .review-card { width: 280px; height: 380px; }
 
@@ -1254,11 +1273,11 @@ p {
   .specs-layout { grid-template-columns: 1fr; }
   .specs-copy { text-align: center; }
   .specs-copy h2 { margin-bottom: 42px; }
-  .specs-grid { grid-template-columns: 1fr; gap: 28px; }
+  .specs-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 18px; }
   .spec-item { grid-template-columns: 1fr; justify-items: center; text-align: center; }
   .specs-drawing { display: none; }
 
-  .faq-section { min-height: auto; padding: 52px 20px 132px; }
+  .faq-section { min-height: auto; padding: 52px var(--gutter) 132px; }
   .faq-list { margin-top: 44px; }
   .faq-item > button { min-height: 76px; padding: 20px; font-size: 17px; }
   .faq-item > button span { flex: 1; padding-left: 29px; text-align: center; }
@@ -1266,10 +1285,30 @@ p {
   .more-questions { margin-top: 58px; }
   .more-questions p { margin-top: 20px; }
 
-  .cta-section { min-height: 500px; }
-  .cta-art { object-position: 68% top; opacity: 1; }
-  .cta-copy { padding-top: 60px; transform: none; }
-  .cta-copy { text-align: center; }
+  .cta-section {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cta-art {
+    position: relative;
+    order: 2;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: center top;
+    opacity: 1;
+  }
+
+  .cta-copy {
+    order: 1;
+    padding-top: 52px;
+    padding-bottom: 34px;
+    transform: none;
+    text-align: center;
+  }
   .cta-copy p { max-width: 70%; margin: 20px auto 0; }
   .cta-button { width: 70%; min-height: 56px; margin: 22px auto 0; font-size: 24px; }
 

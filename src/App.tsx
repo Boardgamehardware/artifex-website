@@ -134,6 +134,14 @@ function Header() {
 
 function SplashSection() {
   const mobile = useMediaQuery('(max-width: 767px)')
+  const modelViewer = (
+    <ModelErrorBoundary>
+      <Suspense fallback={<div className="model-loader">Loading interactive model…</div>}>
+        <SplashViewer />
+      </Suspense>
+    </ModelErrorBoundary>
+  )
+
   return (
     <section className="splash-section" aria-labelledby="splash-title">
       <div className="section-container splash-layout">
@@ -143,15 +151,10 @@ function SplashSection() {
           <p>
             Display your TTRPG character in motion on the Artifact's double-sided screens; with magnetic physical accessories and a design made for tabletop play.
           </p>
+          {mobile && modelViewer}
           <InertAction className="primary-button">Preorder Now!</InertAction>
         </div>
-        {!mobile && (
-          <ModelErrorBoundary>
-            <Suspense fallback={<div className="model-loader">Loading interactive model…</div>}>
-              <SplashViewer />
-            </Suspense>
-          </ModelErrorBoundary>
-        )}
+        {!mobile && modelViewer}
       </div>
       <button
         className="scroll-cue"
@@ -180,14 +183,14 @@ function FeaturesSection() {
         <div className="feature-column">
           <img className="feature-media" src={tabletopImage1} alt="Two Artifact Mini devices on a fantasy game board" />
           <div className="feature-caption">
-            <h3 className="eyebrow">Built For The Tabletop</h3>
+            <h3 className="feature-subtitle">Built For The Tabletop</h3>
             <p>The foot of the Artifact Mini fits a standard 1-inch battlemap grid and its double-sided design keeps your character visible around the table.</p>
           </div>
         </div>
         <div className="feature-column">
           <img className="feature-media" src={tabletopImage2} alt="Artifact Mini devices arranged on a tabletop" />
           <div className="animation-copy feature-caption">
-            <h3 id="animation-title" className="eyebrow">Four Fantastical Designs</h3>
+            <h3 id="animation-title" className="feature-subtitle">Four Fantastical Designs</h3>
             <p>With four outer designs inspired by different character backgrounds and map settings, the Artifact is designed to meld seamlessly into the tabletop. </p>
           </div>
         </div>
