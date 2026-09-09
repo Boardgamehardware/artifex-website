@@ -369,7 +369,7 @@ p {
 
 .feature-subtitle {
   margin-bottom: 12px;
-  color: #fff;
+  color: var(--accent-secondary);
   font-family: 'Girassol', serif;
   font-size: clamp(28px, 2.55vw, 38px);
   font-weight: 400;
