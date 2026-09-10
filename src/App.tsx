@@ -1,23 +1,31 @@
 import { Component, lazy, Suspense, useEffect, useRef, useState, type ErrorInfo, type ReactNode } from 'react'
 import './App.css'
-import { hotspotOccupant, initialPlacements, placeProp } from './configurator'
-import { faqs, models, props, slides } from './content'
-import { useDocumentVisible, useHasApproachedViewport, useMediaQuery, useVisualTestMode } from './hooks'
-import type { HotspotId, PropId, Slide } from './types'
+import { discordInviteUrl, faqs, slides } from './content'
+import { useDocumentVisible, useMediaQuery, useVisualTestMode } from './hooks'
+import type { Slide } from './types'
 
 import logo from './assets/images/LOGO - vertical.svg'
 import tabletopImage1 from './assets/images/Tabletop Img 1.webp'
 import tabletopImage2 from './assets/images/Tabletop Img 2.webp'
-import animationBackgroundWebm from './assets/images/Animation Demo Video.webm'
-import animationBackgroundMp4 from './assets/images/Animation Demo Video.mp4'
-import animationFallback from './assets/images/Fallback Image - Animate your heros.webp'
+import animationBackgroundWebm from './assets/images/Animate Your Heros.webm'
 import customizeFeatureWebm from './assets/images/Magnetic Attachment Customizability Video.webm'
 import customizeFeatureMp4 from './assets/images/Magnetic Attachment Customizability Video.mp4'
-import customizeCardPlaceholder from './assets/images/Dragon.png'
+import voteStaff from './assets/images/vote/staff-1200x1200.webp'
+import voteOwl from './assets/images/vote/owl-1200x1200.webp'
+import voteNameBoard from './assets/images/vote/name-board-1200x1200.webp'
+import voteConcentration from './assets/images/vote/concentration-1200x1200.webp'
+import voteHeroic from './assets/images/vote/heroic-1200x1200.webp'
+import voteSpider from './assets/images/vote/spider-1200x1200.webp'
+import voteCharmed from './assets/images/vote/charmed-1200x1200.webp'
+import voteFighterBadge from './assets/images/vote/fighter-badge-1200x1200.webp'
+import voteSickle from './assets/images/vote/sickle-1200x1200.webp'
+import voteRogueBadge from './assets/images/vote/rogue-badge-1200x1200.webp'
+import voteBurning from './assets/images/vote/burning-1200x1200.webp'
+import voteDragon from './assets/images/vote/dragon-1200x1200.webp'
+import voteScull from './assets/images/vote/scull-1200x1200.webp'
 import specsDrawing from './assets/images/Specs - Decorative Side Drawing.webp'
 import ctaBackground from './assets/images/BG image - Footer.webp'
 import nextImageIcon from './assets/Icons/Next Image Button.png'
-import previousImageIcon from './assets/Icons/Next Image Button (Left).png'
 import downArrow from './assets/Icons/Downward arrow.png'
 import upArrow from './assets/Icons/Upward arrow.png'
 import discordIcon from './assets/Icons/Discord icon.png'
@@ -34,7 +42,6 @@ import sizeIcon from './assets/Icons/specs - size icon.png'
 import casingIcon from './assets/Icons/specs - casing icon.png'
 
 const SplashViewer = lazy(() => import('./components/Artifact3D').then((module) => ({ default: module.SplashViewer })))
-const CustomizeCanvas = lazy(() => import('./components/Customize3D').then((module) => ({ default: module.CustomizeCanvas })))
 
 class ModelErrorBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
   state = { failed: false }
@@ -66,29 +73,42 @@ const specs = [
   { title: 'Casing Options', text: <>Stone, Academy, Wanted, Palace</>, icon: casingIcon },
 ]
 
-const customizationItems = [
-  'Weapons',
-  'Animal familiars',
-  'Erasable nameplates',
-  'Concentration and Death Saves',
-  'Heroic Inspiration',
-  'Light-up accessories',
-  'Animal ears',
-  'Condition markers',
-  "Class markers",
-  'Faction markers',
+type CustomizationItem = {
+  title: string
+  image?: string
+}
+
+const customizationItems: CustomizationItem[] = [
+  { title: 'Weapons', image: voteStaff },
+  { title: 'Animal familiars', image: voteOwl },
+  { title: 'Erasable nameplates', image: voteNameBoard },
+  { title: 'Concentration and Death Saves', image: voteConcentration },
+  { title: 'Heroic Inspiration', image: voteHeroic },
+  { title: 'Light-up accessories', image: voteSpider },
+  { title: 'Animal ears', image: undefined },
+  { title: 'Condition markers', image: voteCharmed },
+  { title: 'Class markers', image: voteFighterBadge },
+  { title: 'Faction markers', image: undefined },
+  // Preserve the temporary titles while assigning the remaining final artwork.
+  { title: 'Accessory idea 11', image: voteSickle },
+  { title: 'Accessory idea 12', image: voteRogueBadge },
+  { title: 'Accessory idea 13', image: voteBurning },
+  { title: 'Accessory idea 14', image: voteDragon },
+  { title: 'Accessory idea 15', image: voteScull },
 ]
 
-function CustomizationCard({ item, liked, onToggleLike }: { item: string; liked: boolean; onToggleLike: () => void }) {
+function CustomizationCard({ item, liked, onToggleLike }: { item: CustomizationItem; liked: boolean; onToggleLike: () => void }) {
   return (
     <article className="customization-card">
-      <img src={customizeCardPlaceholder} alt="" />
+      <div className="customization-card-media">
+        {item.image && <img src={item.image} alt="" />}
+      </div>
       <div className="customization-card-footer">
-        <p>{item}</p>
+        <p>{item.title}</p>
         <button
           className="customization-like"
           type="button"
-          aria-label={`${liked ? 'Unlike' : 'Like'} ${item}`}
+          aria-label={`${liked ? 'Unlike' : 'Like'} ${item.title}`}
           aria-pressed={liked}
           onClick={onToggleLike}
         >
@@ -196,7 +216,6 @@ function FeaturesSection() {
       aria-labelledby="what-title animation-title"
     >
       <div className="what-copy">
-        <p className="eyebrow">Key Features</p>
         <h2 id="what-title">A Miniature That’s Just Better.</h2>
       </div>
       <div className="feature-media-grid">
@@ -226,18 +245,18 @@ function AnimationFeatureSection() {
         <h2 id="animation-feature-title">Animate Your Heros!</h2>
         <p>See your characters animated beautifully on twin high-resolution LCD screens, adding movement and atmosphere to your campaign.</p>
       </div>
-      <video
-        className="background-video animation-feature-video"
-        poster={animationFallback}
-        autoPlay
-        muted
-        loop
-        playsInline
-        aria-hidden="true"
-      >
-        <source src={animationBackgroundWebm} type="video/webm" />
-        <source src={animationBackgroundMp4} type="video/mp4" />
-      </video>
+      <div className="animation-feature-media">
+        <video
+          className="animation-feature-video"
+          src={animationBackgroundWebm}
+          preload="auto"
+          autoPlay
+          loop
+          muted
+          playsInline
+          aria-hidden="true"
+        />
+      </div>
     </section>
   )
 }
@@ -260,14 +279,7 @@ function CustomizeFeatureVideo({ label }: { label: string }) {
 }
 
 function CustomizeSection() {
-  const mobile = useMediaQuery('(max-width: 767px)')
-  const stageRef = useRef<HTMLDivElement>(null)
-  const shouldLoadCanvas = useHasApproachedViewport(stageRef)
-  const [activeIndex, setActiveIndex] = useState(0)
-  const [placements, setPlacements] = useState(initialPlacements)
-  const [announcement, setAnnouncement] = useState('')
   const [likedItems, setLikedItems] = useState<Set<string>>(() => new Set())
-  const activeModel = models[activeIndex]
 
   const toggleLike = (item: string) => {
     setLikedItems((current) => {
@@ -278,21 +290,6 @@ function CustomizeSection() {
     })
   }
 
-  const handlePlace = (propId: PropId, hotspotId: HotspotId) => {
-    const occupant = hotspotOccupant(placements, hotspotId)
-    setPlacements((current) => placeProp(current, propId, hotspotId))
-    const prop = props.find((item) => item.id === propId)!
-    if (occupant && occupant !== propId) {
-      const displacedProp = props.find((item) => item.id === occupant)!
-      setAnnouncement(`${prop.label} exchanged places with ${displacedProp.label}.`)
-    } else {
-      setAnnouncement(`${prop.label} attached to ${hotspotId.replaceAll('-', ' ')}.`)
-    }
-    return true
-  }
-
-  const visibleModels = mobile ? [activeModel] : models
-
   return (
     <section className="customize-section" aria-labelledby="customize-title">
       <div className="section-container customize-feature-layout customize-feature-intro">
@@ -302,74 +299,44 @@ function CustomizeSection() {
         </div>
         <CustomizeFeatureVideo label="Magnetic accessories attaching to an Artifact Mini" />
       </div>
-      
-      {mobile ? (
-        <div className="customization-card-rows">
-          {[customizationItems.slice(0, 5), customizationItems.slice(5)].map((row, rowIndex) => (
-            <div
-              className="section-container customization-card-row"
-              role="region"
-              aria-label={`Customization options row ${rowIndex + 1}`}
-              tabIndex={0}
-              key={rowIndex}
-            >
-              {row.map((item) => (
-                <CustomizationCard item={item} liked={likedItems.has(item)} onToggleLike={() => toggleLike(item)} key={item} />
-              ))}
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="section-container customization-card-grid">
-          {customizationItems.map((item) => (
-            <CustomizationCard item={item} liked={likedItems.has(item)} onToggleLike={() => toggleLike(item)} key={item} />
-          ))}
-        </div>
-      )}
 
-      <div ref={stageRef} className="customize-stage">
-        <h3 className="customize-stage-title">Try it yourself!</h3>
-        {!mobile && <p className="customize-stage-instructions">Drag and drop props to rearrange.</p>}
-        {shouldLoadCanvas ? (
-          <ModelErrorBoundary>
-            <Suspense fallback={<div className="model-loader">Loading customizer…</div>}>
-              <CustomizeCanvas placements={placements} activeModel={mobile ? activeModel.id : null} interactive={!mobile} onPlace={handlePlace} />
-            </Suspense>
-          </ModelErrorBoundary>
-        ) : (
-          <div className="model-loader">Loading customizer…</div>
-        )}
-        <div className="model-labels" aria-hidden="true">
-          {visibleModels.map((model) => <span key={model.id}>{model.label}</span>)}
-        </div>
-        {mobile && (
-          <div className="casing-arrows" aria-label="Choose a casing">
-            <button type="button" onClick={() => setActiveIndex((activeIndex + models.length - 1) % models.length)} aria-label="Previous casing">
-              <img src={previousImageIcon} alt="" />
-            </button>
-            <button type="button" onClick={() => setActiveIndex((activeIndex + 1) % models.length)} aria-label="Next casing">
-              <img src={nextImageIcon} alt="" />
-            </button>
-          </div>
-        )}
+      <div className="section-container accessory-voting-intro">
+        <h3 className="feature-subtitle">Vote for Your Favorites</h3>
+        <p>Which accessories would you love to see us make next? Your votes will help us decide what to prioritize first.</p>
       </div>
 
-      {mobile && (
-        <div className="carousel-dots casing-dots" aria-label="Choose a casing">
-          {models.map((model, index) => (
-            <button
-              key={model.id}
-              type="button"
-              className={index === activeIndex ? 'is-active' : ''}
-              aria-label={`Show ${model.label}`}
-              aria-current={index === activeIndex}
-              onClick={() => setActiveIndex(index)}
-            />
-          ))}
-        </div>
-      )}
+      <div
+        className="section-container customization-card-grid"
+        role="region"
+        aria-label="Accessory voting cards"
+      >
+        {[customizationItems.slice(0, 8), customizationItems.slice(8)].map((row, rowIndex) => (
+          <div
+            className="customization-card-row"
+            role="region"
+            aria-label={`Accessory voting ${rowIndex === 0 ? 'top' : 'bottom'} row`}
+            tabIndex={0}
+            key={rowIndex}
+          >
+            {row.map((item) => (
+              <CustomizationCard item={item} liked={likedItems.has(item.title)} onToggleLike={() => toggleLike(item.title)} key={item.title} />
+            ))}
+          </div>
+        ))}
+      </div>
+      <DiscordCommunitySection />
+    </section>
+  )
+}
 
-      {!mobile && <p className="sr-only" aria-live="polite">{announcement}</p>}
+function DiscordCommunitySection() {
+  return (
+    <section className="section-container discord-community" aria-labelledby="discord-community-title">
+      <h3 id="discord-community-title" className="feature-subtitle">Have Another Idea?</h3>
+      <p>Don't see the accessory you want? Join our Discord and tell us what you'd love to add to your Artifact Mini.</p>
+      <a className="primary-button discord-community-button" href={discordInviteUrl || undefined} aria-disabled={!discordInviteUrl || undefined}>
+        Discuss on Discord
+      </a>
     </section>
   )
 }
@@ -492,7 +459,9 @@ function SpecsSection() {
             ))}
           </div>
         </div>
-        <img className="specs-drawing" src={specsDrawing} alt="Technical line drawing of the Artifact Mini" loading="lazy" />
+        <div className="specs-drawing-frame">
+          <img className="specs-drawing" src={specsDrawing} alt="Technical line drawing of the Artifact Mini" loading="lazy" />
+        </div>
       </div>
     </section>
   )

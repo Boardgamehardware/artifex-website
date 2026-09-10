@@ -4,73 +4,14 @@ import appSlide2Webm from './assets/images/How It Works Video 3.webm'
 import appSlide2Mp4 from './assets/images/How It Works Video 3.mp4'
 import appSlide3 from './assets/images/How it works - 3.gif'
 import appSlide4 from './assets/images/App - Placeholder Image 4.png'
-import customizeDeviceAcademy from './assets/images/Customize Device - Academy.png'
-import customizeDevicePalace from './assets/images/Customize Device - Palace.png'
-import customizeDeviceStone from './assets/images/Customize Device - Stone.png'
-import customizeDeviceWanted from './assets/images/Customize Device - Wanted.png'
-import type { FaqItem, ModelConfig, PropConfig, Slide } from './types'
+import type { FaqItem, Slide } from './types'
 
 export const publicAssetUrl = (filename: string) => `${import.meta.env.BASE_URL}${filename}`
 
 export const artifactModelUrl = publicAssetUrl('Customize 3D Model - Wanted.glb')
 
-export const models: ModelConfig[] = [
-  { id: 'ancient-stone', label: 'Ancient Stone', imageUrl: customizeDeviceStone },
-  { id: 'secret-academy', label: 'Secret Academy', imageUrl: customizeDeviceAcademy },
-  { id: 'wanted', label: 'Wanted: Dead or Alive', imageUrl: customizeDeviceWanted },
-  { id: 'noble-palace', label: 'Noble Palace', imageUrl: customizeDevicePalace },
-]
-
-export const props: PropConfig[] = [
-  {
-    id: 'dragon',
-    label: 'Dragon',
-    modelUrl: publicAssetUrl('Prop - Dragon.glb'),
-    initialHotspot: 'secret-academy-top',
-  },
-  {
-    id: 'gauntlet',
-    label: 'Gauntlet',
-    modelUrl: publicAssetUrl('Prop - Gauntlet.glb'),
-    initialHotspot: 'noble-palace-top',
-  },
-  {
-    id: 'owl',
-    label: 'Owl',
-    modelUrl: publicAssetUrl('Prop - Owl.glb'),
-    initialHotspot: 'ancient-stone-right',
-  },
-  {
-    id: 'potion',
-    label: 'Potion',
-    modelUrl: publicAssetUrl('Prop - Potion.glb'),
-    initialHotspot: 'wanted-left',
-  },
-  {
-    id: 'spider',
-    label: 'Spider',
-    modelUrl: publicAssetUrl('Prop - Spider.glb'),
-    initialHotspot: 'wanted-top',
-  },
-  {
-    id: 'staff',
-    label: 'Staff',
-    modelUrl: publicAssetUrl('Prop - Staff.glb'),
-    initialHotspot: 'ancient-stone-left',
-  },
-  {
-    id: 'ears',
-    label: 'Ears',
-    modelUrl: publicAssetUrl('Prop - Ears.glb'),
-    initialHotspot: 'ancient-stone-top',
-  },
-  {
-    id: 'rogue',
-    label: 'Rogue',
-    modelUrl: publicAssetUrl('Prop - Rogue.glb'),
-    initialHotspot: 'wanted-bottom',
-  },
-]
+// Set the community invite URL before enabling the Discord CTA.
+export const discordInviteUrl = ''
 
 export const slides: Slide[] = [
   { kind: 'video', src: appSlide1Webm, fallbackSrc: appSlide1Mp4, alt: 'How the Artifex app works, step one' },

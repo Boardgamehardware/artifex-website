@@ -35,21 +35,18 @@ test('renders all supplied app slides and exposes the active media', async ({ pa
   await expect(slides.nth(1)).toHaveCSS('opacity', '1')
 })
 
-test('mobile menu and configurator carousel are usable', async ({ page }, testInfo) => {
+test('mobile menu is usable', async ({ page }, testInfo) => {
   test.skip(!testInfo.project.name.startsWith('mobile'))
   await page.goto('/')
-  await expect(page.locator('.splash-viewer')).toHaveCount(0)
-  await expect(page.locator('.specs-drawing')).toBeHidden()
-  await expect(page.getByText('Drag and drop props to rearrange.')).toHaveCount(0)
-  const previousButton = page.getByRole('button', { name: 'Previous casing' })
-  const previousImage = previousButton.locator('img')
-  await expect(previousImage).toHaveCSS('opacity', '1')
-  await expect.poll(() => previousImage.evaluate((image: HTMLImageElement) => [image.naturalWidth, image.naturalHeight])).toEqual([42, 41])
-  const stageBox = await page.locator('.customize-stage').boundingBox()
-  const previousBox = await previousButton.boundingBox()
-  expect(Math.abs((stageBox!.y + stageBox!.height / 2) - (previousBox!.y + previousBox!.height / 2))).toBeLessThan(2)
   await page.getByRole('button', { name: 'Toggle navigation' }).click()
   await expect(page.getByRole('navigation')).toBeVisible()
-  await page.getByRole('button', { name: 'Next casing' }).click()
-  await expect(page.getByText('Secret Academy', { exact: true }).first()).toBeVisible()
+})
+
+test('Discord community replaces the interactive customizer', async ({ page }) => {
+  await page.goto('/')
+  const community = page.getByRole('region', { name: 'Have Another Idea?' })
+  await expect(community).toBeVisible()
+  await expect(community.getByText('Discuss on Discord', { exact: true })).toBeVisible()
+  await expect(page.getByText('Try it yourself!', { exact: true })).toHaveCount(0)
+  await expect(page.locator('.customize-canvas')).toHaveCount(0)
 })

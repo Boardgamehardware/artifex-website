@@ -323,10 +323,11 @@ p {
   display: block;
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  height: auto;
+  aspect-ratio: 2400 / 1500;
   max-width: none;
   border-radius: var(--media-radius);
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .background-video {
@@ -337,7 +338,7 @@ p {
 .feature-media,
 .animation-feature-video,
 .customize-feature-media,
-.customization-card img,
+.customization-card-media,
 .slide-frame {
   box-shadow: 3px 8px 8px rgba(0, 0, 0, 0.314);
 }
@@ -406,10 +407,20 @@ p {
   margin-inline: auto;
 }
 
+.animation-feature-media {
+  width: 100%;
+}
+
 .animation-feature-video {
   display: block;
+  position: static;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  opacity: 1;
+  visibility: visible;
+  z-index: auto;
+  transform: none;
   border-radius: var(--media-radius);
   object-fit: cover;
 }
@@ -488,10 +499,27 @@ p {
 }
 
 .customization-card-grid {
-  margin-top: clamp(48px, 5vw, 72px);
+  margin-top: 24px;
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-rows: repeat(2, 1fr);
   gap: 16px;
+}
+
+.customization-card-row {
+  min-width: 0;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - 80px) / 5.15);
+  gap: inherit;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: inline proximity;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.customization-card-row::-webkit-scrollbar {
+  display: none;
 }
 
 .customization-card {
@@ -499,12 +527,17 @@ p {
   min-width: 0;
   border-radius: 14px;
   background: #211d1d;
+  scroll-snap-align: start;
 }
 
-.customization-card img {
-  display: block;
+.customization-card-media {
   width: 100%;
   aspect-ratio: 1 / 0.78;
+}
+
+.customization-card-media img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -565,67 +598,37 @@ p {
   border-radius: 6px;
 }
 
-.customize-stage {
-  position: relative;
-  width: min(100%, 1496px);
-  height: 900px;
-  margin: 60px auto 0;
-  border-radius: var(--media-radius);
-  background-color: var(--accent-primary);
-  background-image: radial-gradient(circle, rgba(255, 225, 170, 0.386) 1.5px, transparent 1.6px);
-  background-size: 23px 23px;
-}
-
-.customize-stage-title {
-  position: absolute;
-  z-index: 9;
-  top: 70px;
-  right: 20px;
-  left: 20px;
-  color: #000;
-  font-family: 'New Rocker', serif;
-  font-size: var(--title);
-  font-weight: 400;
-  line-height: 1;
-  text-align: center;
-  pointer-events: none;
-}
-
-.customize-stage-instructions {
-  position: absolute;
-  z-index: 9;
-  top: 145px;
-  right: 20px;
-  left: 20px;
-  color: #000;
-  text-align: center;
-  pointer-events: none;
-}
-
-.customize-canvas {
-  position: absolute;
-  inset: 200px 0 100px;
-  touch-action: none;
-}
-
-.model-labels {
-  position: absolute;
-  bottom: 157px;
-  left: 50%;
-  width: 1280px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-  transform: translateX(-50%);
-  color: black;
-  font-family: 'Girassol', serif;
-  font-size: 21px;
+.accessory-voting-intro,
+.discord-community {
+  margin-top: clamp(38px, 5vw, 72px);
   text-align: center;
 }
 
-.casing-arrows,
-.casing-dots {
-  display: none;
+.accessory-voting-intro p,
+.discord-community p {
+  max-width: 660px;
+  margin: 24px auto 0;
+}
+
+.accessory-voting-intro small {
+  display: block;
+  margin-top: 8px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.discord-community-button {
+  margin: 28px auto 0;
+  text-decoration: none;
+}
+
+.discord-community-button:focus-visible {
+  outline: 3px solid var(--accent-secondary);
+  outline-offset: 4px;
+}
+
+.discord-community-button[aria-disabled='true'] {
+  cursor: not-allowed;
 }
 
 .app-section {
@@ -702,8 +705,7 @@ p {
   opacity: 1;
 }
 
-.slide-dots,
-.carousel-dots {
+.slide-dots {
   display: flex;
   justify-content: center;
   gap: 9px;
@@ -713,8 +715,7 @@ p {
   margin-top: 24px;
 }
 
-.slide-dots button,
-.carousel-dots button {
+.slide-dots button {
   width: 13px;
   height: 13px;
   padding: 0;
@@ -724,8 +725,7 @@ p {
   cursor: pointer;
 }
 
-.slide-dots button.is-active,
-.carousel-dots button.is-active {
+.slide-dots button.is-active {
   background: var(--accent-primary);
 }
 
@@ -778,6 +778,10 @@ p {
 .spec-item p {
   margin-top: 8px;
   font-size: 16px;
+}
+
+.specs-drawing-frame {
+  display: contents;
 }
 
 .specs-drawing {
@@ -1007,20 +1011,31 @@ p {
   .splash-layout { grid-template-columns: 48% 52%; }
   .splash-viewer { min-height: 480px; }
   .what-copy { width: 64%; }
-  .customization-card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .customize-stage { height: 810px; }
-  .model-labels { bottom: 172px; font-size: 17px; }
   .specs-grid { gap: 28px 22px; }
   .specs-layout { grid-template-columns: 60% 40%; }
 }
 
 @media (max-width: 767px) {
   :root {
+    --section-gap: 90px;
+    --copy-gap: 16px;
+    --content-gap: 24px;
+    --subsection-gap: 48px;
     --gutter: 30px;
     --title: clamp(38px, 12vw, 52px);
     --subtitle: 20px;
-    --body: 16px;
+    --body: 17px;
   }
+
+  p { line-height: 1.5; }
+
+  .feature-subtitle { font-size: 28px; }
+
+  .spec-item h3,
+  .faq-item > button { font-size: 15px; }
+
+  /* The splash already supplies bottom padding before the feature heading. */
+  main > .splash-section + .feature-section { margin-top: 0; }
 
   .site-header {
     height: 61px;
@@ -1073,12 +1088,44 @@ p {
     min-height: auto;
   }
 
-  .splash-section { padding: 64px 0 74px; }
+  .splash-section {
+    --hero-bottom-space: 74px;
+    padding: 70px 0 var(--hero-bottom-space);
+  }
+
+  .splash-section::before,
+  .splash-section::after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    inset: auto 0 0;
+    pointer-events: none;
+  }
+
+  .splash-section::before {
+    /* Blend into the solid base at the CTA's bottom edge. */
+    bottom: var(--hero-bottom-space);
+    height: calc(160px + 58px);
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.15) 30%,
+      rgba(0, 0, 0, 0.6) 65%,
+      #000 95%
+    );
+  }
+
+  .splash-section::after {
+    height: var(--hero-bottom-space);
+    background: #000;
+  }
+
+  .splash-section + .feature-section { background: #000; }
 
   .splash-layout {
     display: flex;
     flex-direction: column;
-    transform: translateY(10px);
+    transform: none;
     text-align: center;
   }
 
@@ -1088,15 +1135,15 @@ p {
     text-align: center;
   }
 
-  .splash-copy h1 { margin: 16px 0; }
-  .splash-copy > p:not(.eyebrow) { margin-bottom: 20px; }
+  .splash-copy h1 { margin: 24px 0 28px; }
+  .splash-copy > p:not(.eyebrow) { margin-bottom: 8px; }
   .primary-button { width: 100%; min-height: 58px; font-size: 25px; }
 
   .splash-viewer {
     width: 100%;
     height: min(105vw, 410px);
     min-height: 0;
-    margin: 4px auto 20px;
+    margin: 0 auto 20px;
   }
 
   .scroll-cue { display: none; }
@@ -1105,13 +1152,39 @@ p {
     height: auto;
     min-height: 0;
     padding: 54px var(--gutter) 40px;
-    gap: 26px;
   }
 
   .feature-media-grid {
-    grid-template-columns: 1fr;
-    gap: 30px;
+    grid-template-columns: minmax(0, 1fr);
   }
+
+  .feature-media,
+  .animation-feature-media,
+  .customize-feature-media,
+  .slide-frame {
+    width: 90vw;
+    max-width: none;
+  }
+
+  .customize-feature-media,
+  .slide-frame {
+    aspect-ratio: 4 / 3;
+  }
+
+  .feature-media,
+  .animation-feature-media {
+    align-self: center;
+  }
+
+  .customize-feature-media { justify-self: center; }
+
+  .slide-frame {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .customization-card-media { aspect-ratio: 1 / 1; }
+  .customization-card-media img { object-fit: contain; }
 
   .what-copy,
   .feature-caption {
@@ -1119,12 +1192,11 @@ p {
   }
 
   .what-copy h2 {
-    margin: 16px 0 12px;
+    margin: 0;
     white-space: normal;
   }
 
   .animation-feature-section {
-    gap: 26px;
     padding: 54px var(--gutter) 40px;
   }
 
@@ -1137,9 +1209,10 @@ p {
 
   .customize-feature-layout {
     margin-top: 38px;
-    grid-template-columns: 1fr;
-    gap: 38px;
+    grid-template-columns: minmax(0, 1fr);
   }
+
+  .customize-feature-intro { margin-top: 0; }
 
   .customize-feature-copy {
     max-width: 520px;
@@ -1147,37 +1220,18 @@ p {
     text-align: center;
   }
 
-  .customize-intro-copy p {
-    margin-top: 22px;
-  }
-
-  .customization-card-rows {
-    margin-top: 38px;
-    display: grid;
+  .customization-card-grid {
+    margin-top: var(--content-gap);
     gap: 10px;
   }
 
   .customization-card-row {
-    display: grid;
-    grid-template-columns: none;
-    grid-auto-flow: column;
     grid-auto-columns: calc((100% - 20px) / 2.15);
-    gap: 10px;
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    scroll-snap-type: inline proximity;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .customization-card-row::-webkit-scrollbar {
-    display: none;
   }
 
   .customization-card {
     width: 100%;
     margin-inline: 0;
-    scroll-snap-align: start;
   }
 
   .customization-card-footer {
@@ -1200,84 +1254,23 @@ p {
   .customization-like-heart { font-size: 19px; }
   .customization-like-count { font-size: 12px; }
 
-  .customize-stage {
-    width: calc(100% - (var(--gutter) * 2));
-    height: 790px;
-    margin-top: 38px;
-  }
-
-  .model-labels {
-    right: 20px;
-    bottom: 126px;
-    left: 20px;
-    width: auto;
-    display: block;
-    transform: none;
-    font-size: 23px;
-  }
-
-  .customize-canvas {
-    touch-action: pan-y;
-  }
-
-  .casing-arrows {
-    position: absolute;
-    z-index: 8;
-    inset: 200px 0 100px;
-    display: block;
-    pointer-events: none;
-  }
-
-  .casing-arrows > button {
-    position: absolute;
-    top: 50%;
-    width: 52px;
-    height: 52px;
-    padding: 0;
-    border: 0;
-    transform: translateY(-50%);
-    opacity: 1;
-    background: transparent;
-    pointer-events: auto;
-  }
-
-  .casing-arrows > button:first-child { left: 18px; }
-  .casing-arrows > button:last-child { right: 18px; }
-
-  .casing-arrows img {
-    width: 42px;
-    margin-inline: auto;
-    opacity: 1;
-  }
-
-  .casing-dots {
-    margin: 18px auto 20px;
-    display: flex;
-  }
-
-  .prop-controls { margin-top: 0; }
-
   .app-section {
     min-height: auto;
     padding: 70px 0 66px;
   }
 
-  .app-layout { grid-template-columns: 1fr; gap: 38px; }
+  .app-layout { grid-template-columns: minmax(0, 1fr); }
   .app-copy { text-align: center; }
   .app-copy p { margin-inline: auto; }
-  .app-copy p { margin-top: 22px; }
-  .slide-frame { aspect-ratio: 1.28; }
   .next-slide { right: 16px; }
 
   .specs-section { min-height: auto; padding: 50px 0 0; }
-  .specs-layout { grid-template-columns: 1fr; }
+  .specs-layout { grid-template-columns: minmax(0, 1fr); }
   .specs-copy { text-align: center; }
-  .specs-copy h2 { margin-bottom: 42px; }
+  .specs-copy h2 { margin-bottom: var(--content-gap); }
   .specs-grid {
-    position: relative;
-    left: 50%;
-    width: min(calc(100vw - 16px), 380px);
-    transform: translateX(-50%);
+    width: min(100%, 380px);
+    margin-inline: auto;
     grid-template-columns: 1fr;
     gap: 12px;
   }
@@ -1299,11 +1292,10 @@ p {
     display: grid;
     grid-template-columns: 108px minmax(0, 1fr);
     align-items: center;
-    gap: 80px;
+    gap: 12px;
   }
 
   .spec-item h3 {
-    font-size: 15px;
     line-height: 1.05;
   }
 
@@ -1311,24 +1303,37 @@ p {
     margin-top: 0;
     font-size: 14px;
     line-height: 1.15;
-    white-space: nowrap;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .specs-drawing-frame {
+    display: block;
+    position: relative;
+    justify-self: center;
+    width: 90vw;
+    aspect-ratio: 11 / 10;
+    margin-top: var(--content-gap);
+    overflow: hidden;
   }
 
   .specs-drawing {
-    width: 100%;
-    max-width: 480px;
-    margin: 34px auto 0;
-    display: block;
-    transform: none;
+    /* The assembly occupies about 55% of the transparent asset's width. */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 175%;
+    max-width: none;
+    height: auto;
+    margin: 0;
+    transform: translate(-52.7%, -52%);
   }
 
   .faq-section { min-height: auto; padding: 52px var(--gutter) 132px; }
-  .faq-list { margin-top: 44px; }
-  .faq-item > button { min-height: 76px; padding: 20px; font-size: 17px; }
+  .faq-list { margin-top: var(--content-gap); }
+  .faq-item > button { min-height: 76px; padding: 20px; }
   .faq-item > button span { flex: 1; padding-left: 29px; text-align: center; }
   .faq-answer p { padding-inline: 20px; }
-  .more-questions { margin-top: 58px; }
-  .more-questions p { margin-top: 20px; }
 
   .cta-section {
     min-height: 0;
@@ -1349,13 +1354,14 @@ p {
 
   .cta-copy {
     order: 1;
-    padding-top: 52px;
+    /* The FAQ supplies the shared transition's 100px bottom padding. */
+    padding-top: 0;
     padding-bottom: 34px;
     transform: none;
     text-align: center;
   }
-  .cta-copy p { max-width: 70%; margin: 20px auto 0; }
-  .cta-button { width: 70%; min-height: 56px; margin: 22px auto 0; font-size: 24px; }
+  .cta-copy p { max-width: 70%; margin: var(--copy-gap) auto 0; }
+  .cta-button { width: 70%; min-height: 56px; margin: var(--content-gap) auto 0; font-size: 24px; }
 
   .site-footer { min-height: auto; padding: 58px 0 28px; }
   .site-footer { text-align: center; }
@@ -1365,6 +1371,34 @@ p {
   .footer-links { grid-template-columns: 1fr 1.4fr; gap: 26px; }
   .footer-links > div { justify-items: center; }
   .footer-links .inert-action { font-size: 16px; }
+  /* Mobile reading order and shared spacing within content groups. */
+  .feature-media { order: 1; }
+
+  .feature-section,
+  .feature-media-grid { gap: var(--subsection-gap); }
+
+  .feature-column,
+  .animation-feature-section,
+  .customize-feature-layout,
+  .app-layout { gap: var(--content-gap); }
+
+  :is(.feature-caption, .animation-feature-copy, .customize-intro-copy,
+      .app-copy, .accessory-voting-intro, .discord-community) > :is(h2, h3) {
+    margin-bottom: 0;
+  }
+
+  :is(.feature-caption, .animation-feature-copy, .customize-intro-copy,
+      .app-copy, .accessory-voting-intro, .discord-community, .more-questions) > p {
+    margin-top: var(--copy-gap);
+  }
+
+  .accessory-voting-intro,
+  .discord-community,
+  .more-questions { margin-top: var(--subsection-gap); }
+
+  .discord-community-button,
+  .more-questions .social-links { margin-top: var(--content-gap); }
+
 }
 
 /* Keep section-to-section spacing controlled solely by --section-gap. */
