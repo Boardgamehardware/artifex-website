@@ -1,10 +1,11 @@
-import { Component, lazy, Suspense, useEffect, useRef, useState, type ErrorInfo, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import './App.css'
 import { discordInviteUrl, faqs, slides } from './content'
 import { useDocumentVisible, useMediaQuery, useVisualTestMode } from './hooks'
 import type { Slide } from './types'
 
 import logo from './assets/images/LOGO - vertical.svg'
+import artifactMiniVideo from './assets/images/artifact mini.webm'
 import tabletopImage1 from './assets/images/Tabletop Img 1.webp'
 import tabletopImage2 from './assets/images/Tabletop Img 2.webp'
 import animationBackgroundWebm from './assets/images/Animate Your Heros.webm'
@@ -40,27 +41,6 @@ import costIcon from './assets/Icons/specs - cost icon.png'
 import displayIcon from './assets/Icons/specs - display icon.png'
 import sizeIcon from './assets/Icons/specs - size icon.png'
 import casingIcon from './assets/Icons/specs - casing icon.png'
-
-const SplashViewer = lazy(() => import('./components/Artifact3D').then((module) => ({ default: module.SplashViewer })))
-
-class ModelErrorBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
-  state = { failed: false }
-
-  static getDerivedStateFromError() {
-    return { failed: true }
-  }
-
-  componentDidCatch(error: Error, info: ErrorInfo) {
-    console.error('The interactive model could not be displayed.', error, info)
-  }
-
-  render() {
-    if (this.state.failed) {
-      return <div className="model-error" role="status">Interactive model unavailable. The rest of the page is still ready.</div>
-    }
-    return this.props.children
-  }
-}
 
 const specs = [
   { title: 'Battery', text: <>2 day standby clock<br />5 hours active</>, icon: batteryIcon },
@@ -174,12 +154,19 @@ function Header() {
 
 function SplashSection() {
   const mobile = useMediaQuery('(max-width: 767px)')
-  const modelViewer = (
-    <ModelErrorBoundary>
-      <Suspense fallback={<div className="model-loader">Loading interactive model…</div>}>
-        <SplashViewer />
-      </Suspense>
-    </ModelErrorBoundary>
+  const heroVideo = (
+    <div className="splash-product-media">
+      <video
+        className="splash-product-video"
+        src={artifactMiniVideo}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        aria-label="Artifact Mini product video"
+      />
+    </div>
   )
 
   return (
@@ -191,10 +178,10 @@ function SplashSection() {
           <p>
             Display your TTRPG character in motion on the Artifact's double-sided screens; with magnetic physical accessories and a design made for tabletop play.
           </p>
-          {mobile && modelViewer}
+          {mobile && heroVideo}
           <InertAction className="primary-button">Preorder Now!</InertAction>
         </div>
-        {!mobile && modelViewer}
+        {!mobile && heroVideo}
       </div>
       <button
         className="scroll-cue"

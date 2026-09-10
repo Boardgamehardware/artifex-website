@@ -182,13 +182,23 @@ p {
   background: var(--accent-primary);
 }
 
-.splash-viewer {
+.splash-product-media {
   position: relative;
   width: 100%;
   height: min(62vw, 820px);
   min-height: 560px;
-  cursor: grab;
-  touch-action: none;
+  overflow: hidden;
+}
+
+.splash-product-video {
+  position: absolute;
+  inset: -7.5%;
+  display: block;
+  width: 115%;
+  max-width: none;
+  height: 115%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .splash-viewer::before {
@@ -1009,7 +1019,7 @@ p {
   .what-section { scroll-margin-top: 85px; }
   .main-nav { gap: 28px; }
   .splash-layout { grid-template-columns: 48% 52%; }
-  .splash-viewer { min-height: 480px; }
+  .splash-product-media { min-height: 480px; }
   .what-copy { width: 64%; }
   .specs-grid { gap: 28px 22px; }
   .specs-layout { grid-template-columns: 60% 40%; }
@@ -1083,14 +1093,12 @@ p {
   .main-nav .inert-action { padding: 13px 16px; }
   .nav-cta { min-height: 48px; justify-content: center; }
 
-  .splash-section,
-  .splash-layout {
-    min-height: auto;
-  }
-
+  /* Compose the text, product and anchored CTA within one mobile poster. */
   .splash-section {
-    --hero-bottom-space: 74px;
-    padding: 70px 0 var(--hero-bottom-space);
+    height: calc(100svh - 65px);
+    min-height: 540px;
+    padding: 0;
+    background-position: 58% center;
   }
 
   .splash-section::before,
@@ -1103,47 +1111,70 @@ p {
   }
 
   .splash-section::before {
-    /* Blend into the solid base at the CTA's bottom edge. */
-    bottom: var(--hero-bottom-space);
-    height: calc(160px + 58px);
-    background: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0.15) 30%,
-      rgba(0, 0, 0, 0.6) 65%,
-      #000 95%
-    );
+    bottom: 28px;
+    height: 220px;
+    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.35) 40%, #000 85%);
   }
 
   .splash-section::after {
-    height: var(--hero-bottom-space);
+    height: 28px;
     background: #000;
   }
 
   .splash-section + .feature-section { background: #000; }
 
   .splash-layout {
-    display: flex;
-    flex-direction: column;
+    display: block;
+    width: calc(100% - 48px);
+    height: 100%;
+    min-height: 0;
     transform: none;
     text-align: center;
   }
 
   .splash-copy {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto auto minmax(0, 1fr);
+    justify-items: center;
+    height: 100%;
     max-width: none;
+    padding: clamp(20px, 4svh, 36px) 0 96px;
     transform: none;
     text-align: center;
   }
 
-  .splash-copy h1 { margin: 24px 0 28px; }
-  .splash-copy > p:not(.eyebrow) { margin-bottom: 8px; }
+  .splash-copy > .eyebrow {
+    font-size: clamp(14px, 3.8vw, 17px);
+    line-height: 1.15;
+  }
+
+  .splash-copy h1 {
+    margin: 12px 0 16px;
+    font-size: clamp(40px, 12vw, 54px);
+    line-height: 1.05;
+  }
+
+  .splash-copy > p:not(.eyebrow) {
+    max-width: 370px;
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.3;
+  }
+
   .primary-button { width: 100%; min-height: 58px; font-size: 25px; }
 
-  .splash-viewer {
-    width: 100%;
-    height: min(105vw, 410px);
+  .splash-copy > .primary-button {
+    position: absolute;
+    z-index: 2;
+    inset: auto 0 28px;
+  }
+
+  .splash-product-media {
+    width: 90vw;
+    height: 100%;
     min-height: 0;
-    margin: 0 auto 20px;
+    margin: 0;
   }
 
   .scroll-cue { display: none; }
